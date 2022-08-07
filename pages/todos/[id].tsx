@@ -1,24 +1,24 @@
-import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 
-const ProductPage: NextPage = () => {
+const Product = () => {
   const router = useRouter()
-  const { category, name } = router.query
+  const { id } = router.query
 
   console.log(router)
+
   return (
     <div className={styles.container}>
       <Head>
         <title>Next, Prisma and Tailwind</title>
-        <meta name="description" content="Next, Prisma and Tailwind" />
+        <meta name="description" content="`${category}`" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className="text-3xl font-bold">
-        {category} : {name} 
+        Todo: {id}  
         </h1>
 
       </main>
@@ -30,4 +30,4 @@ const ProductPage: NextPage = () => {
   )
 }
 
-export default ProductPage
+export default Product
