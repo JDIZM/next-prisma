@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docker:up": "docker compose up -d",
+    "docker:stop": "docker compose down",
+    "db:drop": "docker compose start db && docker compose exec db sh -c 'export PGPASSWORD=${POSTGRES_PASSWORD}; dropdb --if-exists ${POSTGRES_DB} -U ${POSTGRES_USER}'",
+    "db:create": "docker compose start db && docker compose exec db sh -c 'export PGPASSWORD=${POSTGRES_PASSWORD}; createdb -U ${POSTGRES_USER} ${POSTGRES_DB}'",
+    "db:import": "docker exec -i postgres-db /usr/bin/pg_restore -U postgres -d test < backup.sql",
+    "db:copy": "docker cp backup.sql postgres-db:/home/backup.sql",
+    "db:backup": "docker exec postgres-db /usr/bin/pg_dump -U postgres test -Fc --no-owner > backup.sql"
   },
   "dependencies": {
     "next": "12.2.4",
