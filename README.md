@@ -1,13 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is an example project to demonstrate how to use Next.js with Prisma, Postgres and Docker.
+
+- [Next.js](https://nextjs.org/)
+- TypeScript
+- [Prisma](https://www.prisma.io/)
+- Postgres
+- Docker
+
+## Installation
+
+This project requires node.js to be installed. This project uses volta to manage node versions.
+
+To install volta run the following command in the terminal.
+
+```
+curl https://get.volta.sh | bash
+```
 
 ## Getting Started
+
+Copy the default env vars
+
+```bash
+cp .env.example .env
+```
+
+You will need docker installed to setup a database then run
+
+```bash
+docker compose up -d
+```
 
 First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -17,6 +43,20 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## Prisma
+
+### Migrations
+
+run `npm run prisma:status` to check the status of the current migrations.
+
+Then `npm run prisma:migrate` to run the migrations.
+
+### Seeding the database
+
+Seed the database with `npm run prisma:seed`.
+
+The migrations will only create the required tables and schema. The seed script will populate the database with data.
 
 ## Learn More
 
