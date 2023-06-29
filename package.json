@@ -7,16 +7,25 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier -w '**/*.{js,ts,mjs,cjs,json,tsx,jsx}'",
+    "format:check": "prettier --check '**/*.{js,ts,mjs,cjs,json,tsx,jsx}'",
     "docker:up": "docker compose up -d",
     "docker:stop": "docker compose down",
     "db:drop": "docker compose start db && docker compose exec db sh -c 'export PGPASSWORD=${POSTGRES_PASSWORD}; dropdb --if-exists ${POSTGRES_DB} -U ${POSTGRES_USER}'",
     "db:create": "docker compose start db && docker compose exec db sh -c 'export PGPASSWORD=${POSTGRES_PASSWORD}; createdb -U ${POSTGRES_USER} ${POSTGRES_DB}'",
     "db:import": "docker exec -i postgres-db /usr/bin/pg_restore -U postgres -d test < backup.sql",
     "db:copy": "docker cp backup.sql postgres-db:/home/backup.sql",
-    "db:backup": "docker exec postgres-db /usr/bin/pg_dump -U postgres test -Fc --no-owner > backup.sql"
+    "db:backup": "docker exec postgres-db /usr/bin/pg_dump -U postgres test -Fc --no-owner > backup.sql",
+    "prisma:generate": "npx prisma generate",
+    "prisma:status": "npx prisma migrate status",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:seed": "npx prisma db seed",
+    "tw": "tailwind-config-viewer -o"
   },
   "dependencies": {
     "@prisma/client": "^4.2.1",
+    "next-superjson": "^0.0.4",
+    "superjson": "^1.9.1",
     "next": "12.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -28,9 +37,21 @@
     "autoprefixer": "^10.4.8",
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "postcss": "^8.4.16",
+    "prettier": "^2.8.8",
     "prisma": "^4.2.1",
     "tailwindcss": "^3.1.8",
-    "typescript": "4.7.4"
+    "tailwind-config-viewer": "^1.7.2",
+    "typescript": "4.7.4",
+    "ts-node": "^10.9.1"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
+  "volta": {
+    "node": "16.18.1",
+    "npm": "8.19.2"
   }
 }
