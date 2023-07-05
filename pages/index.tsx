@@ -1,12 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-// import Image from "next/image";
-import styles from "@/styles/Home.module.css";
-import { User, PrismaClient } from "@prisma/client";
+import { User } from "@prisma/client";
 
+// https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-props
 export async function getStaticProps() {
-  const prisma = new PrismaClient();
-  const users = await prisma.user.findMany();
+  const response = await fetch("http://localhost:3000/api/users");
+  const users = await response.json();
   return {
     props: { users },
   };
@@ -18,28 +17,28 @@ type PageProps = {
 
 const Home: NextPage<PageProps> = ({ users }) => {
   return (
-    <div className={styles.container}>
+    <div className="flex justify-center items-center min-h-screen">
       <Head>
         <title>Next, Prisma and Tailwind</title>
         <meta name="description" content="Next, Prisma and Tailwind" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main className="h-full">
         <h1 className="text-3xl font-bold underline mb-4">
           I am using Tailwind.
         </h1>
         <p>display users seeded to database:</p>
-        <ul>
-          {users.map((user: any) => (
-            <li key={user.id}>
+        <ul className="pt-4">
+          {users.map((user: User) => (
+            <li key={user.id} className="pt-4">
               {user.name} - {user.email}
             </li>
           ))}
         </ul>
       </main>
 
-      <footer className={styles.footer}>
+      <footer className="">
         <div></div>
       </footer>
     </div>
